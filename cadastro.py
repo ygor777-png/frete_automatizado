@@ -8,7 +8,7 @@ def carregar_motoristas():
     if os.path.exists(MOTORISTAS_FILE):
         return pd.read_csv(MOTORISTAS_FILE)
     else:
-        return pd.DataFrame(columns=["nome","telefone","caminhao","disponibilidade"])
+        return pd.DataFrame(columns=["nome","telefone","caminhao","atendimento"])
 
 def salvar_motoristas(df_motoristas):
     df_motoristas.to_csv(MOTORISTAS_FILE, index=False)
