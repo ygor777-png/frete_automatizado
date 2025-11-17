@@ -1,20 +1,24 @@
 import streamlit as st
 import pandas as pd
 import os
-from fretes import carregar_planilha, validar_rotas
+from fretes import carregar_planilha, consulta_frete, mensagem_motorista, validar_rotas
 
+# Arquivos
 FRETES_FILE = "fretes.xlsx"
 MOTORISTAS_FILE = "motoristas.csv"
 
 # Funções auxiliares
 def carregar_motoristas():
-    if os.path.exists(MOTORISTAS_FILE):
-        return pd.read_csv(MOTORISTAS_FILE)
+    if os.path.exists(MOTORISTAS_FILE) and os.path.getsize(MOTORISTAS_FILE) > 0:
+        try:
+            return pd.read_csv(MOTORISTAS_FILE, encoding="utf-8")
+        except UnicodeDecodeError:
+            return pd.read_csv(MOTORISTAS_FILE, encoding="latin1")
     else:
         return pd.DataFrame(columns=["nome","telefone","caminhao","atendimento"])
 
 def salvar_motoristas(df_motoristas):
-    df_motoristas.to_csv(MOTORISTAS_FILE, index=False)
+    df_motoristas.to_csv(MOTORISTAS_FILE, index=False, encoding="utf-8")
 
 def salvar_fretes(df_fretes):
     df_fretes.to_excel(FRETES_FILE, index=False)
@@ -23,10 +27,101 @@ def salvar_fretes(df_fretes):
 df = carregar_planilha(FRETES_FILE)
 df_motoristas = carregar_motoristas()
 
+# Sidebar para navegação
 pagina = st.sidebar.selectbox("Navegação", ["Dashboard", "Fretes", "Motoristas", "Gestão de Fretes"])
 
-# ---------------- Gestão de Fretes ----------------
-if pagina == "Gestão de Fretes":
+# ---------------- Página Dashboard ----------------
+if pagina == "Dashboard":
+    st.title("📊 Dashboard - Automação de Fretes")
+
+    # KPIs rápidos
+    total_rotas = len(df)
+    total_motoristas = len(df_motoristas)
+    preco_medio_pj = df["valor_pj"].mean()
+    preco_medio_pf = df["valor_pf"].mean()
+
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Rotas cadastradas", total_rotas)
+    col2.metric("Motoristas cadastrados", total_motoristas)
+    col3.metric("Preço médio PJ", f"R$ {preco_medio_pj:.2f}")
+    col4.metric("Preço médio PF", f"R$ {preco_medio_pf:.2f}")
+
+    # Gráfico de resumo
+    resumo = df.groupby("destino")[["valor_pj","valor_pf"]].mean().reset_index()
+    st.subheader("Valores médios por destino")
+    st.bar_chart(resumo.set_index("destino"))
+
+# ---------------- Página Fretes ----------------
+elif pagina == "Fretes":
+    st.title("🚚 Gestão de Fretes")
+
+    st.subheader("Validação das rotas")
+    st.dataframe(validar_rotas(df))
+
+    produto = st.selectbox("Produto", ["Todos"] + list(df["produto"].unique()))
+    caminhao = st.selectbox("Caminhão", ["Todos"] + list(df["caminhao"].unique()))
+
+    df_filtrado = df.copy()
+    if produto != "Todos":
+        df_filtrado = df_filtrado[df_filtrado["produto"] == produto]
+    if caminhao != "Todos":
+        df_filtrado = df_filtrado[df_filtrado["caminhao"] == caminhao]
+
+    origem = st.selectbox("Origem", df_filtrado["origem"].unique())
+    destinos_disponiveis = df_filtrado[df_filtrado["origem"] == origem]["destino"].unique()
+    destino = st.selectbox("Destino", destinos_disponiveis)
+    tipo_cliente = st.radio("Tipo de cliente", ["pj","pf"])
+
+    if st.button("Consultar frete"):
+        valor = consulta_frete(df_filtrado, origem, destino, tipo_cliente)
+        if valor:
+            st.success(f"Frete {tipo_cliente.upper()}: R$ {valor:.2f}")
+            mensagem = mensagem_motorista(df_filtrado, origem, destino, tipo_cliente)
+            st.text_area("Mensagem para motorista", mensagem, height=150)
+        else:
+            st.error("Rota não encontrada")
+
+    # Mensagens em lote
+    if produto != "Todos":
+        mensagens = []
+        for _, row in df_filtrado.iterrows():
+            msg = mensagem_motorista(df_filtrado, row["origem"], row["destino"], "pj")
+            mensagens.append(msg)
+        todas_mensagens = "\n\n".join(mensagens)
+
+        st.text_area("Mensagens de todos os fretes filtrados", todas_mensagens, height=300)
+        st.download_button("Copiar todas as mensagens", todas_mensagens, "mensagens.txt")
+
+# ---------------- Página Motoristas ----------------
+elif pagina == "Motoristas":
+    st.title("👷 Cadastro de Motoristas")
+
+    with st.form("cadastro_motorista"):
+        nome = st.text_input("Nome")
+        telefone = st.text_input("Telefone")
+        caminhao = st.selectbox("Tipo de caminhão", ["Graneleiro","Rodocaçamba","Baú","Carreta"])
+        disponibilidade = st.text_input("Disponibilidade (ex: SP, RJ, MG)")
+        submit = st.form_submit_button("Cadastrar")
+
+        if submit and nome and telefone:
+            novo_motorista = pd.DataFrame([{
+                "nome": nome,
+                "telefone": telefone,
+                "caminhao": caminhao,
+                "disponibilidade": disponibilidade
+            }])
+            df_motoristas = pd.concat([df_motoristas, novo_motorista], ignore_index=True)
+            salvar_motoristas(df_motoristas)
+            st.success(f"Motorista {nome} cadastrado com sucesso!")
+
+    st.subheader("Motoristas cadastrados")
+    if not df_motoristas.empty:
+        st.dataframe(df_motoristas)
+    else:
+        st.info("Nenhum motorista cadastrado ainda.")
+
+# ---------------- Página Gestão de Fretes ----------------
+elif pagina == "Gestão de Fretes":
     st.title("🗂 Gestão de Fretes")
 
     st.subheader("Fretes atuais")
