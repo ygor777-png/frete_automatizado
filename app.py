@@ -108,7 +108,7 @@ elif pagina == "Motoristas":
                 "nome": nome,
                 "telefone": telefone,
                 "caminhao": caminhao,
-                "disponibilidade": disponibilidade
+                "atendimento": atendimento
             }])
             df_motoristas = pd.concat([df_motoristas, novo_motorista], ignore_index=True)
             salvar_motoristas(df_motoristas)
