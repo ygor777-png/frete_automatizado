@@ -185,6 +185,7 @@ if pagina == "Frete Mínimo ANTT":
         custo_pedagio = pedagio_por_eixo * eixos
         subtotal = custo_km + custo_pedagio
         valor_min_motorista = custo_km
+        valor_min_motorista_ton = valor_min_motorista / tonelada
 
         # Aplicar margem
         valor_com_margem = subtotal * (1 + margem/100)
@@ -202,7 +203,7 @@ if pagina == "Frete Mínimo ANTT":
             f"Pedágio por eixo: R$ {pedagio_por_eixo:.2f}\n"
             "\nDADOS FINAIS!\n"
             f"Valor min motorista R${valor_min_motorista:.2f}\n"
-            f"Valor Ton FM R${valor_min_motorista / tonelada:.2f} \n"
+            f"Valor Ton FM R${valor_min_motorista_ton:.2f} \n"
             f"Valor Ton FE R$ \n"
             f"Valor min motorista com ped R$ \n"
             f"Valor ton FM com ped R$ \n"
