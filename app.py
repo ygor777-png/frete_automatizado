@@ -195,7 +195,7 @@ if pagina == "Frete Mínimo ANTT":
             f"Frete mínimo ANTT\n"
             f"Origem: {origem}\n"
             f"Destino: {destino}\n"
-            f'Tonelada: {tonelada}\n
+            f"Tonelada: {tonelada}\n"
             f"Distância: {km:.0f} km\n"
             f"Eixos: {eixos}\n"
             f"Pedágio total: R$ {custo_pedagio:.2f}\n"
