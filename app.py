@@ -136,7 +136,7 @@ if pagina == "Gestão de Fretes":
         descarga = st.text_input("Local de descarga")
         produto = st.text_input("Produto")
         caminhao = st.text_input("Caminhão")
-        valor_fe = st.number_input ("Valor FE", min_value=0.0, step=10.0)
+        valor_empresa = st.number_input ("Valor FE", min_value=0.0, step=10.0)
         valor_pj = st.number_input("Valor PJ", min_value=0.0, step=10.0)
         valor_pf = st.number_input("Valor PF", min_value=0.0, step=10.0)
         submit = st.form_submit_button("Adicionar")
@@ -149,7 +149,7 @@ if pagina == "Gestão de Fretes":
                 "descarga": descarga,
                 "produto": produto,
                 "caminhao": caminhao,
-                "valor_fe": valor_fe,
+                "valor_empresa": valor_empresa,
                 "valor_pj": valor_pj,
                 "valor_pf": valor_pf
             }])
