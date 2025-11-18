@@ -184,7 +184,7 @@ if pagina == "Frete Mínimo ANTT":
         custo_km = custo_base_por_km[eixos]
         custo_pedagio = pedagio_por_eixo * eixos
         subtotal = custo_km + custo_pedagio
-        valor_min_motorista = subtotal
+        valor_min_motorista = custo_km
 
         # Aplicar margem
         valor_com_margem = subtotal * (1 + margem/100)
