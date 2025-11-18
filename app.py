@@ -165,7 +165,7 @@ if pagina == "Frete Mínimo ANTT":
     # Inputs
     origem = st.text_input("Cidade de origem")
     destino = st.text_input("Cidade de destino")
-    tonelada = st.text_input('Quantas toneladas', min_value=1.0, step=0.1)
+    tonelada = st.number_input('Quantas toneladas', min_value=1.0, step=0.1)
     km = st.number_input("Distância rota 1 do Qualp (km)", min_value=1.0, step=1.0)
     eixos = st.selectbox("Quantidade de eixos do caminhão", [5, 6, 7, 9])
     pedagio_por_eixo = st.number_input("Valor do pedágio por eixo (R$)", min_value=0.0, step=0.01)
