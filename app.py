@@ -164,7 +164,8 @@ if pagina == "Frete Mínimo ANTT":
     # Inputs
     origem = st.text_input("Cidade de origem")
     destino = st.text_input("Cidade de destino")
-    km = st.number_input("Distância (km)", min_value=1.0, step=1.0)
+    tonelada = st.text_input('Quantas toneladas')
+    km = st.number_input("Distância rota 1 do Qualp (km)", min_value=1.0, step=1.0)
     eixos = st.selectbox("Quantidade de eixos do caminhão", [5, 6, 7, 9])
     pedagio_por_eixo = st.number_input("Valor do pedágio por eixo (R$)", min_value=0.0, step=0.01)
     margem = st.number_input("Margem (%)", min_value=0.0, step=0.1)
@@ -176,8 +177,8 @@ if pagina == "Frete Mínimo ANTT":
         custo_base_por_km = {
             5: 6.0301 * km + 615.26,
             6: 6.7408 * km + 663.07,
-            7: 3.80,
-            9: 4.20
+            7: 7.313 * km + 753.88,
+            9: 8.242 * km + 808.17
         }
 
         custo_km = km * custo_base_por_km[eixos]
@@ -194,6 +195,7 @@ if pagina == "Frete Mínimo ANTT":
             f"Frete mínimo ANTT\n"
             f"Origem: {origem}\n"
             f"Destino: {destino}\n"
+            f'Tonelada: {tonelada}\n
             f"Distância: {km:.0f} km\n"
             f"Eixos: {eixos}\n"
             f"Pedágio total: R$ {custo_pedagio:.2f}\n"
