@@ -214,8 +214,8 @@ if pagina == "Frete Mínimo ANTT":
             f"Valor Ton FE R${ceil(valor_min_fe + 1):.2f} \n"
             f"Valor min motorista com ped R${valor_motorista_com_ped:.2f}\n"
             f"Valor ton FM com pedagio R${ceil(valor_motorista_com_ped_ton):.2f} \n"
-            f"Valor ton FE com pedagio sem ICMS R${ceil(valor_fe_com_ped_ton + 1.0):.2f} \n"
-            f"valor ton FE com pedagio e ICMS R${ceil(valor_fe_final_com_icms + 1.0):.2f} \n"
+            f"Valor ton FE com pedagio sem ICMS R${ceil(valor_fe_com_ped_ton + 2.0):.2f} \n"
+            f"valor ton FE com pedagio e ICMS R${ceil(valor_fe_final_com_icms + 3.0):.2f} \n"
         )
 
         st.success("✅ Cálculo realizado!")
