@@ -50,7 +50,7 @@ def mensagem_motorista(df, origem, destino, tipo_cliente="pj"):
             f"Destino: {rota['descarga']} ({destino})\n"
             f"Tipo Caminhão: {rota['caminhao']}\n"
             f"Frete {tipo_cliente.upper()}: R$ {valor:.2f}"
-            f"\n entre no nosso grupo do Whatsapp! https://chat.whatsapp.com/JgOl4jkgpGNI2AgWglPCs2\n")
+            f"\n\nEntre no nosso grupo do Whatsapp!\nhttps://chat.whatsapp.com/JgOl4jkgpGNI2AgWglPCs2\n")
 
 if __name__ == "__main__":
     df = carregar_planilha("fretes.xlsx")
