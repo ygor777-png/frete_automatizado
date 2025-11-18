@@ -28,7 +28,7 @@ df = carregar_planilha(FRETES_FILE)
 df_motoristas = carregar_motoristas()
 
 # Sidebar para navegação
-pagina = st.sidebar.selectbox("Navegação", ["Dashboard", "Fretes", "Motoristas", "Gestão de Fretes"])
+pagina = st.sidebar.selectbox("Navegação", ["Dashboard", "Fretes", "Motoristas", "Gestão de Fretes", "Frete Mínimo ANTT"])
 
 # ---------------- Página Dashboard ----------------
 if pagina == "Dashboard":
