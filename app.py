@@ -202,7 +202,7 @@ if pagina == "Frete Mínimo ANTT":
             f"Pedágio por eixo: R$ {pedagio_por_eixo:.2f}\n"
             "\nDADOS FINAIS!\n"
             f"Valor min motorista R${valor_min_motorista:.2f}\n"
-            f"Valor Ton FM R$ \n"
+            f"Valor Ton FM R${valor_min_motorista / tonelada:.2f} \n"
             f"Valor Ton FE R$ \n"
             f"Valor min motorista com ped R$ \n"
             f"Valor ton FM com ped R$ \n"
