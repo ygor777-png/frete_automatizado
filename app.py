@@ -187,7 +187,7 @@ if pagina == "Frete Mínimo ANTT":
         subtotal = custo_km + custo_pedagio
         valor_min_motorista = custo_km
         valor_min_motorista_ton = valor_min_motorista / float(tonelada)
-        valor_min_fe = valor_min_motorista_ton + (1 + margem/100)
+        valor_min_fe = valor_min_motorista_ton * (1 + float(margem)/100)
         valor_motorista_com_ped = custo_pedagio + valor_min_motorista
 
         # Aplicar margem
