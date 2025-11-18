@@ -208,7 +208,7 @@ if pagina == "Frete Mínimo ANTT":
             f"Valor min motorista R${valor_min_motorista:.2f}\n"
             f"Valor Ton FM R${ceil(valor_min_motorista_ton):.2f} \n"
             f"Valor Ton FE R${ceil(valor_min_fe):.2f} \n"
-            f"Valor min motorista com ped R${valor_motorista_com_ped:.2f)}\n"
+            f"Valor min motorista com ped R${valor_motorista_com_ped:.2f}\n"
             f"Valor ton FM com ped R$ \n"
             f"Valor ton FE com pedagio sem ICMS R$ \n"
             f"valor ton FE com pedagio e ICMS R$ \n"
