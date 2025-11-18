@@ -189,6 +189,10 @@ if pagina == "Frete Mínimo ANTT":
         valor_min_motorista_ton = valor_min_motorista / float(tonelada)
         valor_min_fe = valor_min_motorista_ton * (1 + float(margem)/100)
         valor_motorista_com_ped = custo_pedagio + valor_min_motorista
+        valor_motorista_com_ped_ton = valor_motorista_com_ped / tonelada
+        valor_fe_com_ped_ton = valor_motorista_com_ped_ton * (1 + float(margem)/100)
+        valor_fe_final_com_icms = valor_fe_com_ped_ton * (1 + float(icms)/100)
+        
 
         # Aplicar margem
         valor_com_margem = subtotal * (1 + margem/100)
@@ -207,11 +211,11 @@ if pagina == "Frete Mínimo ANTT":
             "\nDADOS FINAIS!\n"
             f"Valor min motorista R${valor_min_motorista:.2f}\n"
             f"Valor Ton FM R${ceil(valor_min_motorista_ton):.2f} \n"
-            f"Valor Ton FE R${ceil(valor_min_fe):.2f} \n"
+            f"Valor Ton FE R${ceil(valor_min_fe + 1):.2f} \n"
             f"Valor min motorista com ped R${valor_motorista_com_ped:.2f}\n"
-            f"Valor ton FM com ped R$ \n"
-            f"Valor ton FE com pedagio sem ICMS R$ \n"
-            f"valor ton FE com pedagio e ICMS R$ \n"
+            f"Valor ton FM com ped R${ceil(valor_motorista_com_ped_ton):.2f} \n"
+            f"Valor ton FE com pedagio sem ICMS R${ceil(valor_fe_com_ped_ton + 1.0):.2f} \n"
+            f"valor ton FE com pedagio e ICMS R${ceil(valor_fe_final_com_icms + 1.0):.2f} \n"
         )
 
         st.success("✅ Cálculo realizado!")
