@@ -121,7 +121,7 @@ elif pagina == "Motoristas":
         st.info("Nenhum motorista cadastrado ainda.")
 
 # ---------------- Página Gestão de Fretes ----------------
-elif pagina == "Gestão de Fretes":
+if pagina == "Gestão de Fretes":
     st.title("🗂 Gestão de Fretes")
 
     st.subheader("Fretes atuais")
@@ -156,3 +156,6 @@ elif pagina == "Gestão de Fretes":
         df = df[df["destino"] != rota_remover]
         salvar_fretes(df)
         st.success(f"Frete para {rota_remover} removido com sucesso ✅")
+
+#-------------------- Calculo Frete ANTT ------------------#
+elif pagina == "Calculo Frete ANTT"
