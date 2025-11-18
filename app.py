@@ -100,7 +100,7 @@ elif pagina == "Motoristas":
         nome = st.text_input("Nome")
         telefone = st.text_input("Telefone")
         caminhao = st.selectbox("Tipo de caminhão", ["Graneleiro","Rodocaçamba","Baú","Carreta"])
-        disponibilidade = st.text_input("Disponibilidade (ex: SP, RJ, MG)")
+        atendimento = st.text_input("Área de atendimento (ex: SP, RJ, MG)")
         submit = st.form_submit_button("Cadastrar")
 
         if submit and nome and telefone:
