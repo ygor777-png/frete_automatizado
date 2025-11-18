@@ -202,9 +202,9 @@ if pagina == "Frete Mínimo ANTT":
 
         mensagem = (
             f"Frete mínimo ANTT\n"
-            f"Origem: {origem}\n"
-            f"Destino: {destino}\n"
-            f"Tonelada: {tonelada}\n"
+            f"Origem: {origem.title()}\n"
+            f"Destino: {destino.title()}\n"
+            f"Tonelada: {tonelada:0f}\n"
             f"Distância: {km:.0f} km\n"
             f"Eixos: {eixos}\n"
             f"Pedágio por eixo: R$ {pedagio_por_eixo:.2f}\n"
@@ -213,7 +213,7 @@ if pagina == "Frete Mínimo ANTT":
             f"Valor Ton FM R${ceil(valor_min_motorista_ton):.2f} \n"
             f"Valor Ton FE R${ceil(valor_min_fe + 1):.2f} \n"
             f"Valor min motorista com ped R${valor_motorista_com_ped:.2f}\n"
-            f"Valor ton FM com ped R${ceil(valor_motorista_com_ped_ton):.2f} \n"
+            f"Valor ton FM com pedagio R${ceil(valor_motorista_com_ped_ton):.2f} \n"
             f"Valor ton FE com pedagio sem ICMS R${ceil(valor_fe_com_ped_ton + 1.0):.2f} \n"
             f"valor ton FE com pedagio e ICMS R${ceil(valor_fe_final_com_icms + 1.0):.2f} \n"
         )
