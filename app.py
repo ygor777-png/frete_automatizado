@@ -159,3 +159,6 @@ if pagina == "Gestão de Fretes":
 
 #-------------------- Calculo Frete ANTT ------------------#
 elif pagina == "Calculo Frete ANTT"
+    st.title ('🧮 Calculo Frete ANTT')
+
+    
