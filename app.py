@@ -174,8 +174,8 @@ if pagina == "Frete Mínimo ANTT":
         # Fórmula simplificada (exemplo)
         # Base ANTT: custo por km varia conforme eixos, aqui vamos simular
         custo_base_por_km = {
-            5: 3.20,
-            6: 3.50,
+            5: 6.0301 * km + 615.26,
+            6: 6.7408 * km + 663.07,
             7: 3.80,
             9: 4.20
         }
