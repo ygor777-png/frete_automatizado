@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+import base64, requests
 from math import ceil
 from fretes import carregar_planilha, consulta_frete, mensagem_motorista, validar_rotas
 
@@ -23,6 +24,33 @@ def salvar_motoristas(df_motoristas):
 
 def salvar_fretes(df_fretes):
     df_fretes.to_excel(FRETES_FILE, index=False)
+
+    # >>> NOVO: salvar também no GitHub via API <<<
+    token = st.secrets["GITHUB_TOKEN"]
+    owner = "ygor777-png"       # coloque aqui seu usuário GitHub
+    repo = "frete_automatizado"    # coloque aqui o nome do repositório
+    path = FRETES_FILE
+
+    with open(FRETES_FILE, "rb") as f:
+        content = f.read()
+    content_b64 = base64.b64encode(content).decode("utf-8")
+
+    url_get = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
+    headers = {"Authorization": f"token {token}"}
+    resp = requests.get(url_get, headers=headers)
+    sha = resp.json()["sha"]
+
+    url_put = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
+    data = {
+        "message": "Atualizando fretes.xlsx via Streamlit",
+        "content": content_b64,
+        "sha": sha
+    }
+    resp = requests.put(url_put, headers=headers, json=data)
+    if resp.status_code in [200, 201]:
+        st.success("✅ fretes.xlsx atualizado no GitHub!")
+    else:
+        st.error(f"❌ Erro ao atualizar no GitHub: {resp.json()}")
 
 # Carregar dados
 df = carregar_planilha(FRETES_FILE)
