@@ -44,12 +44,13 @@ def mensagem_motorista(df, origem, destino, tipo_cliente="pj"):
         return "Rota não encontrada"
     rota = filtro.iloc[0]
     valor = rota[f"valor_{tipo_cliente.lower()}"]
-    return (f"Carga disponível!\n"
+    return (f"SOTRAN CUBATÃO  🔴⚪⚫ ! 🚚 🚛\n\nCarga disponível!\n"
             f"Produto: {rota['produto']}\n"
             f"Origem: {rota['carregamento']} ({origem})\n"
             f"Destino: {rota['descarga']} ({destino})\n"
-            f"Caminhão: {rota['caminhao']}\n"
-            f"Frete {tipo_cliente.upper()}: R$ {valor:.2f}")
+            f"Tipo Caminhão: {rota['caminhao']}\n"
+            f"Frete {tipo_cliente.upper()}: R$ {valor:.2f}"
+            f"\n entre no nosso grupo do Whatsapp! https://chat.whatsapp.com/JgOl4jkgpGNI2AgWglPCs2\n")
 
 if __name__ == "__main__":
     df = carregar_planilha("fretes.xlsx")
