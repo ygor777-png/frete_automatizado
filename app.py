@@ -133,7 +133,7 @@ if pagina == "Gestão de Fretes":
         origem = st.text_input("Origem")
         carregamento = st.text_input("Local de carregamento")
         destino = st.text_input("Destino")
-        descarga = st.text_input("Local de descarga"
+        descarga = st.text_input("Local de descarga")
         produto = st.text_input("Produto")
         caminhao = st.text_input("Caminhão")
         valor_fe = st.number_input ("Valor FE", min_value=0.0, step=10.0)
