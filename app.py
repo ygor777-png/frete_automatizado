@@ -175,15 +175,16 @@ if pagina == "Frete Mínimo ANTT":
         # Fórmula simplificada (exemplo)
         # Base ANTT: custo por km varia conforme eixos, aqui vamos simular
         custo_base_por_km = {
-            5: 6.0301 * km + 615.26,
-            6: 6.7408 * km + 663.07,
-            7: 7.313 * km + 753.88,
-            9: 8.242 * km + 808.17
+            5: 6.0301 + 615.26,
+            6: 6.7408 + 663.07,
+            7: 7.313 + 753.88,
+            9: 8.242 + 808.17
         }
 
         custo_km = km * custo_base_por_km[eixos]
         custo_pedagio = pedagio_por_eixo * eixos
         subtotal = custo_km + custo_pedagio
+        valor_min_motorista = subtotal
 
         # Aplicar margem
         valor_com_margem = subtotal * (1 + margem/100)
@@ -200,7 +201,7 @@ if pagina == "Frete Mínimo ANTT":
             f"Eixos: {eixos}\n"
             f"Pedágio por eixo: R$ {pedagio_por_eixo:.2f}\n"
             "\nDADOS FINAIS!\n"
-            f"Valor min motorista R$\n"
+            f"Valor min motorista R${valor_min_motorista:.2f}\n"
             f"Valor Ton FM R$ \n"
             f"Valor Ton FE R$ \n"
             f"Valor min motorista com ped R$ \n"
