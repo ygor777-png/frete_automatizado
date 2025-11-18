@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+from math import ceil
 from fretes import carregar_planilha, consulta_frete, mensagem_motorista, validar_rotas
 
 # Arquivos
@@ -186,6 +187,8 @@ if pagina == "Frete Mínimo ANTT":
         subtotal = custo_km + custo_pedagio
         valor_min_motorista = custo_km
         valor_min_motorista_ton = valor_min_motorista / float(tonelada)
+        valor_min_fe = valor_min_motorista_ton + (1 + margem/100)
+        valor_motorista_com_ped = custo_pedagio + valor_min_motorista
 
         # Aplicar margem
         valor_com_margem = subtotal * (1 + margem/100)
@@ -203,9 +206,9 @@ if pagina == "Frete Mínimo ANTT":
             f"Pedágio por eixo: R$ {pedagio_por_eixo:.2f}\n"
             "\nDADOS FINAIS!\n"
             f"Valor min motorista R${valor_min_motorista:.2f}\n"
-            f"Valor Ton FM R${valor_min_motorista_ton:.2f} \n"
-            f"Valor Ton FE R$ \n"
-            f"Valor min motorista com ped R$ \n"
+            f"Valor Ton FM R${ceil(valor_min_motorista_ton):.2f} \n"
+            f"Valor Ton FE R${ceil(valor_min_fe):.2f} \n"
+            f"Valor min motorista com ped R${valor_motorista_com_ped:.2f)}\n"
             f"Valor ton FM com ped R$ \n"
             f"Valor ton FE com pedagio sem ICMS R$ \n"
             f"valor ton FE com pedagio e ICMS R$ \n"
