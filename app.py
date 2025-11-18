@@ -131,9 +131,12 @@ if pagina == "Gestão de Fretes":
     st.subheader("Adicionar novo frete")
     with st.form("novo_frete"):
         origem = st.text_input("Origem")
+        carregamento = st.text_input("Local de carregamento")
         destino = st.text_input("Destino")
+        descarga = st.text_input("Local de descarga"
         produto = st.text_input("Produto")
         caminhao = st.text_input("Caminhão")
+        valor_fe = st.number_input ("Valor FE, min_value=0.0, step=10.0)
         valor_pj = st.number_input("Valor PJ", min_value=0.0, step=10.0)
         valor_pf = st.number_input("Valor PF", min_value=0.0, step=10.0)
         submit = st.form_submit_button("Adicionar")
@@ -141,9 +144,12 @@ if pagina == "Gestão de Fretes":
         if submit and origem and destino:
             novo = pd.DataFrame([{
                 "origem": origem,
+                "carregamento": carregamento,
                 "destino": destino,
+                "descarga": descarga,
                 "produto": produto,
                 "caminhao": caminhao,
+                "valor_fe": valor_fe,
                 "valor_pj": valor_pj,
                 "valor_pf": valor_pf
             }])
