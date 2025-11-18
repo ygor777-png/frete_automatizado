@@ -157,8 +157,53 @@ if pagina == "Gestão de Fretes":
         salvar_fretes(df)
         st.success(f"Frete para {rota_remover} removido com sucesso ✅")
 
-#-------------------- Calculo Frete ANTT ------------------#
-elif pagina == "Calculo Frete ANTT"
-    st.title ('🧮 Calculo Frete ANTT')
+# ---------------- Página Frete Mínimo ANTT ----------------
+if pagina == "Frete Mínimo ANTT":
+    st.title("🚚 Cálculo do Frete Mínimo - ANTT")
+
+    # Inputs
+    origem = st.text_input("Cidade de origem")
+    destino = st.text_input("Cidade de destino")
+    km = st.number_input("Distância (km)", min_value=1.0, step=1.0)
+    eixos = st.selectbox("Quantidade de eixos do caminhão", [5, 6, 7, 9])
+    pedagio_por_eixo = st.number_input("Valor do pedágio por eixo (R$)", min_value=0.0, step=0.01)
+    margem = st.number_input("Margem (%)", min_value=0.0, step=0.1)
+    icms = st.number_input("ICMS (%)", min_value=0.0, step=0.1)
+
+    if st.button("Calcular frete"):
+        # Fórmula simplificada (exemplo)
+        # Base ANTT: custo por km varia conforme eixos, aqui vamos simular
+        custo_base_por_km = {
+            5: 3.20,
+            6: 3.50,
+            7: 3.80,
+            9: 4.20
+        }
+
+        custo_km = km * custo_base_por_km[eixos]
+        custo_pedagio = pedagio_por_eixo * eixos
+        subtotal = custo_km + custo_pedagio
+
+        # Aplicar margem
+        valor_com_margem = subtotal * (1 + margem/100)
+
+        # Aplicar ICMS
+        valor_final = valor_com_margem * (1 + icms/100)
+
+        mensagem = (
+            f"Frete mínimo ANTT\n"
+            f"Origem: {origem}\n"
+            f"Destino: {destino}\n"
+            f"Distância: {km:.0f} km\n"
+            f"Eixos: {eixos}\n"
+            f"Pedágio total: R$ {custo_pedagio:.2f}\n"
+            f"Subtotal: R$ {subtotal:.2f}\n"
+            f"Com margem: R$ {valor_com_margem:.2f}\n"
+            f"Com ICMS: R$ {valor_final:.2f}"
+        )
+
+        st.success("✅ Cálculo realizado!")
+        st.text_area("Resultado", mensagem, height=200)
+        st.button("📋 Copiar resultado", on_click=lambda: st.write("Copiado!"))
 
     
