@@ -198,10 +198,15 @@ if pagina == "Frete Mínimo ANTT":
             f"Tonelada: {tonelada}\n"
             f"Distância: {km:.0f} km\n"
             f"Eixos: {eixos}\n"
-            f"Pedágio total: R$ {custo_pedagio:.2f}\n"
-            f"Subtotal: R$ {subtotal:.2f}\n"
-            f"Com margem: R$ {valor_com_margem:.2f}\n"
-            f"Com ICMS: R$ {valor_final:.2f}"
+            f"Pedágio por eixo: R$ {pedagio_por_eixo:.2f}\n"
+            "\nDADOS FINAIS!\n"
+            f"Valor min motorista R$\n"
+            f"Valor Ton FM R$ \n"
+            f"Valor Ton FE R$ \n"
+            f"Valor min motorista com ped R$ \n"
+            f"Valor ton FM com ped R$ \n"
+            f"Valor ton FE com pedagio sem ICMS R$ \n"
+            f"valor ton FE com pedagio e ICMS R$ \n"
         )
 
         st.success("✅ Cálculo realizado!")
