@@ -26,8 +26,8 @@ def salvar_usuarios(df_usuarios):
 def tela_login():
     st.title("🔐 Login")
 
-    usuario = st.text_input("Usuário")
-    senha = st.text_input("Senha", type="password")
+    usuario = st.text_input("Usuário").strip()
+    senha = st.text_input("Senha", type="password").strip()
 
     df_usuarios = carregar_usuarios()
 
