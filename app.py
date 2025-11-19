@@ -17,6 +17,9 @@ def carregar_usuarios():
     else:
         return pd.DataFrame(columns=["usuario", "senha", "nome"])
 
+df_usuarios = carregar_usuarios()
+st.write("Usuários carregados:", df_usuarios)
+
 def salvar_usuarios(df_usuarios):
     df_usuarios.to_csv(USUARIOS_FILE, index=False)
 
