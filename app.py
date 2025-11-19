@@ -109,9 +109,6 @@ def salvar_fretes(df_fretes):
     else:
         st.error(f"❌ Erro ao atualizar no GitHub: {resp.json()}")
 
-if pagina == "Cadastro de Usuários":
-    tela_cadastro_usuario()
-
 # Carregar dados
 df = carregar_planilha(FRETES_FILE)
 df_motoristas = carregar_motoristas()
@@ -325,4 +322,8 @@ if pagina == "Frete Mínimo ANTT":
         st.text_area("Resultado", mensagem, height=350)
         st.button("📋 Copiar resultado", on_click=lambda: st.write("Copiado!"))
 
-    
+    #================ PAGINA CADASTRO USUARIO ========================#
+
+    if pagina == "Cadastro de Usuários":
+    tela_cadastro_usuario()
+
