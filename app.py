@@ -17,6 +17,9 @@ def carregar_usuarios():
     else:
         return pd.DataFrame(columns=["usuario", "senha", "nome"])
 
+df_usuarios = carregar_usuarios()
+st.write("📋 Usuários carregados:", df_usuarios)
+
 def salvar_usuarios(df_usuarios):
     df_usuarios.to_csv("usuarios.csv", index=False)
 
@@ -28,8 +31,6 @@ def tela_login():
 
     df_usuarios = carregar_usuarios()
 
-    # 👇 Debug: mostrar o que foi digitado
-    st.write("🔎 Tentando login com:", usuario, senha)
 
     # 👇 Comparação
     match = df_usuarios[
@@ -37,8 +38,6 @@ def tela_login():
         (df_usuarios["senha"].astype(str).str.strip() == senha)
     ]
 
-    # 👇 Debug: mostrar se encontrou
-    st.write("✅ Match encontrado:", match)
 
     if st.button("Entrar"):
         if not df_usuarios.empty:
