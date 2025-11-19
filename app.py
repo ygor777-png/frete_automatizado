@@ -324,6 +324,6 @@ if pagina == "Frete Mínimo ANTT":
 
     #================ PAGINA CADASTRO USUARIO ========================#
 
-    if pagina == "Cadastro de Usuários":
+if pagina == "Cadastro de Usuários":
     tela_cadastro_usuario()
 
