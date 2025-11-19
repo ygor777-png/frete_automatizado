@@ -12,8 +12,8 @@ MOTORISTAS_FILE = "motoristas.csv"
 USUARIOS_FILE = "usuarios.csv"
 
 def carregar_usuarios():
-    if os.path.exists(USUARIOS_FILE):
-        return pd.read_csv(USUARIOS_FILE)
+    if os.path.exists("usuarios.csv"):
+        return pd.read_csv("usuarios.csv")
     else:
         return pd.DataFrame(columns=["usuario", "senha", "nome"])
 
