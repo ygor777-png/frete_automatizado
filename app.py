@@ -18,10 +18,10 @@ def carregar_usuarios():
         return pd.DataFrame(columns=["usuario", "senha", "nome"])
 
 df_usuarios = carregar_usuarios()
-st.write("Usuários carregados:", df_usuarios)
+st.write("📋 Usuários carregados:", df_usuarios)
 
 def salvar_usuarios(df_usuarios):
-    df_usuarios.to_csv(USUARIOS_FILE, index=False)
+    df_usuarios.to_csv("usuarios.csv", index=False)
 
 def tela_login():
     st.title("🔐 Login")
@@ -31,12 +31,20 @@ def tela_login():
 
     df_usuarios = carregar_usuarios()
 
+    # 👇 Debug: mostrar o que foi digitado
+    st.write("🔎 Tentando login com:", usuario, senha)
+
+    # 👇 Comparação
+    match = df_usuarios[
+        (df_usuarios["usuario"].astype(str).str.strip() == usuario) &
+        (df_usuarios["senha"].astype(str).str.strip() == senha)
+    ]
+
+    # 👇 Debug: mostrar se encontrou
+    st.write("✅ Match encontrado:", match)
+
     if st.button("Entrar"):
         if not df_usuarios.empty:
-            match = df_usuarios[
-                (df_usuarios["usuario"] == usuario) &
-                (df_usuarios["senha"] == senha)
-            ]
             if not match.empty:
                 st.session_state["logado"] = True
                 st.session_state["usuario"] = match.iloc[0]["nome"]
@@ -49,13 +57,14 @@ def tela_login():
 def tela_cadastro_usuario():
     st.title("👤 Cadastro de Usuários (admin)")
 
-    novo_usuario = st.text_input("Novo usuário")
-    nova_senha = st.text_input("Nova senha", type="password")
-    nome = st.text_input("Nome completo")
+    novo_usuario = st.text_input("Novo usuário").strip()
+    nova_senha = st.text_input("Nova senha", type="password").strip()
+    nome = st.text_input("Nome completo").strip()
+
     if st.button("Cadastrar usuário"):
         if novo_usuario and nova_senha and nome:
             df_usuarios = carregar_usuarios()
-            if novo_usuario in df_usuarios["usuario"].values:
+            if novo_usuario in df_usuarios["usuario"].astype(str).str.strip().values:
                 st.warning("Usuário já existe")
             else:
                 novo = pd.DataFrame([{
@@ -66,8 +75,6 @@ def tela_cadastro_usuario():
                 df_usuarios = pd.concat([df_usuarios, novo], ignore_index=True)
                 salvar_usuarios(df_usuarios)
                 st.success(f"Usuário {nome} cadastrado com sucesso!")
-
-
 
 # Funções auxiliares
 def carregar_motoristas():
