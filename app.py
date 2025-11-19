@@ -124,7 +124,7 @@ pagina = st.sidebar.selectbox("Navegação", [
 
 # ---------------- Página Login ----------------
 if pagina == "Login":
-    tela_de_login()
+    tela_login()
 
 # ---------------- Página Dashboard ----------------
 if pagina == "Dashboard":
