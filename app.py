@@ -119,8 +119,12 @@ df_motoristas = carregar_motoristas()
 
 # Sidebar para navegação
 pagina = st.sidebar.selectbox("Navegação", [
-    "Dashboard", "Fretes", "Motoristas", "Gestão de Fretes", "Frete Mínimo ANTT", "Cadastro de Usuários"
+    "Login", "Dashboard", "Fretes", "Motoristas", "Gestão de Fretes", "Frete Mínimo ANTT", "Cadastro de Usuários"
 ])
+
+# ---------------- Página Login ----------------
+if pagina == "Login":
+    tela_de_login()
 
 # ---------------- Página Dashboard ----------------
 if pagina == "Dashboard":
