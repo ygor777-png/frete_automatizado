@@ -9,67 +9,6 @@ from fretes import carregar_planilha, consulta_frete, mensagem_motorista, valida
 FRETES_FILE = "fretes.xlsx"
 MOTORISTAS_FILE = "motoristas.csv"
 
-USUARIOS_FILE = "usuarios.csv"
-
-def carregar_usuarios():
-    if os.path.exists("usuarios.csv"):
-        return pd.read_csv("usuarios.csv")
-    else:
-        return pd.DataFrame(columns=["usuario", "senha", "nome"])
-
-
-def salvar_usuarios(df_usuarios):
-    df_usuarios.to_csv("usuarios.csv", index=False)
-
-def tela_login():
-    st.title("🔐 Login")
-
-    usuario = st.text_input("Usuário").strip()
-    senha = st.text_input("Senha", type="password").strip()
-
-    df_usuarios = carregar_usuarios()
-
-
-    # 👇 Comparação
-    match = df_usuarios[
-        (df_usuarios["usuario"].astype(str).str.strip() == usuario) &
-        (df_usuarios["senha"].astype(str).str.strip() == senha)
-    ]
-
-
-    if st.button("Entrar"):
-        if not df_usuarios.empty:
-            if not match.empty:
-                st.session_state["logado"] = True
-                st.session_state["usuario"] = match.iloc[0]["nome"]
-                st.success(f"Bem-vindo, {match.iloc[0]['nome']}!")
-            else:
-                st.error("Usuário ou senha inválidos")
-        else:
-            st.error("Nenhum usuário cadastrado")
-
-def tela_cadastro_usuario():
-    st.title("👤 Cadastro de Usuários (admin)")
-
-    novo_usuario = st.text_input("Novo usuário").strip()
-    nova_senha = st.text_input("Nova senha", type="password").strip()
-    nome = st.text_input("Nome completo").strip()
-
-    if st.button("Cadastrar usuário"):
-        if novo_usuario and nova_senha and nome:
-            df_usuarios = carregar_usuarios()
-            if novo_usuario in df_usuarios["usuario"].astype(str).str.strip().values:
-                st.warning("Usuário já existe")
-            else:
-                novo = pd.DataFrame([{
-                    "usuario": novo_usuario,
-                    "senha": nova_senha,
-                    "nome": nome
-                }])
-                df_usuarios = pd.concat([df_usuarios, novo], ignore_index=True)
-                salvar_usuarios(df_usuarios)
-                st.success(f"Usuário {nome} cadastrado com sucesso!")
-
 # Funções auxiliares
 def carregar_motoristas():
     if os.path.exists(MOTORISTAS_FILE) and os.path.getsize(MOTORISTAS_FILE) > 0:
@@ -121,10 +60,6 @@ df_motoristas = carregar_motoristas()
 pagina = st.sidebar.selectbox("Navegação", [
     "Login", "Dashboard", "Fretes", "Motoristas", "Gestão de Fretes", "Frete Mínimo ANTT", "Cadastro de Usuários"
 ])
-
-# ---------------- Página Login ----------------
-if pagina == "Login":
-    tela_login()
 
 # ---------------- Página Dashboard ----------------
 if pagina == "Dashboard":
@@ -329,9 +264,4 @@ if pagina == "Frete Mínimo ANTT":
         st.success("✅ Cálculo realizado!")
         st.text_area("Resultado", mensagem, height=350)
         st.button("📋 Copiar resultado", on_click=lambda: st.write("Copiado!"))
-
-    #================ PAGINA CADASTRO USUARIO ========================#
-
-if pagina == "Cadastro de Usuários":
-    tela_cadastro_usuario()
 
