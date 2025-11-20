@@ -82,13 +82,6 @@ if pagina == "Dashboard":
     st.subheader("Valores médios por destino")
     st.bar_chart(resumo.set_index("destino"))
 
-if "logado" not in st.session_state:
-    st.session_state["logado"] = False
-
-if not st.session_state["logado"]:
-    tela_login()
-    st.stop()
-
 # ---------------- Página Fretes ----------------
 elif pagina == "Fretes":
     st.title("🚚 Gestão de Fretes")
